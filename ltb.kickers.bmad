@@ -1,0 +1,23 @@
+!==============================================================
+! Kickers for LtB lattice
+! From ltb.dat MAD file
+! 10/12/23  Lucy Lin
+!==============================================================
+
+DH015: HKICKER, L=LENK, KICK=CALK*IDH015
+DH076: HKICKER, L=LENK, KICK=CALK*IDH076
+DH088: HKICKER, L=LENK, KICK=CALK*IDH088
+DH115: HKICKER, L=LENL, KICK=CALK*IDH115
+
+DV017: VKICKER, L=LENK, KICK=CALK*IDV017
+DV026: VKICKER, L=LENK, KICK=CALK*IDV026
+DV083: VKICKER, L=LENK, KICK=CALK*IDV083
+DV095: VKICKER, L=LENK, KICK=CALK*IDV095
+DV112: VKICKER, L=LENK, KICK=CALK*IDV112   ! fast kicker
+
+! HEBT kickers
+HK9: HKICKER, KICK = 0.0
+HK16: HKICKER, KICK = 0.0
+
+VK9: VKICKER, KICK = 0.0
+VK16: VKICKER, KICK = 0.0

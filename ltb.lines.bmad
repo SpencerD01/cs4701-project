@@ -1,0 +1,52 @@
+!==============================================================
+! Sublines for LtB lattice
+! From ltb.dat MAD file
+! 10/12/23  Lucy Lin
+!==============================================================
+
+
+LIN1: LINE = (DH1T,MW000,DH1Z, DR005,Z005,DR011,XF011,DR015,DH015,
+                 DRQH1,QH1,DR017,DV017,DR019,BPMV019,INTRABPM,BPMH019,
+                 DRQV2,QV2,DRQH3,QH3,DR026,DV026,DR027,BPMV027,
+                 INTRABPM,BPMH027,DRQV4,QV4,DRQH5,QH5,DR035,MW035)
+
+LIN2: LINE = (DRDH2, DH2, DRDH3, DH3, DRQH6,QH6,DRDH4, DH4, DRQH7,QH7,
+                 DR066,BPMV066,INTRABPM,BPMH066,DRDH5, DH5, DR074,Z074)
+
+LIN3: LINE = (DR076,DH076,DR078,BPMV078,INTRABPM,BPMH078,DRQH8,QH8,
+                 DR083,DV083,DRQV9,QV9,DR088,DH088,DR090,BPMV090,
+                 INTRABPM,BPMH090,DRQH10,QH10,DR095,DV095,DRQV11,QV11,
+                 DR100,XF100,DR102,BPMV102,INTRABPM,BPMH102,DRQH12,
+                 QH12,DR107,MW107)
+
+LIN4: LINE = (DR109,BPMV109,INTRABPM,BPMH109,DRQV13,QV13,DR112,DV112,
+                 DR115,DH115,DREND)
+
+LIN5: LINE = (DHC5,MLC5x,IJFOIL)
+
+
+!   Note:  "LTB1" = LIN1  (use LIN1)
+!   Note:  "LTB2" = LIN2  (use LIN2)
+
+!     Define "LTB3": 
+LTB3:  LINE = (LIN3,LIN4)
+
+!     Define Full LTB thru IJFOIL
+LTB:  LINE = (LIN1,LIN2,LIN3,LIN4,LIN5)
+
+!==============================================================
+! HEBT line
+!==============================================================
+
+HEBT: LINE = (TANK9, L18950, QV07, L03489, HK9, VK9, L23784,
+                  HK16, VK16, L03237, QH017, L33150, QV029, L17650,
+                  SEM1,   L17640, QH042, L04414, L13236, SEM2,
+                  L17641, QV054, L10920, SEM3,   L04510)   
+
+!  HEBT1 is piece beyond LTB's DH1
+HEBT1:  LINE = (L23320, QH068,  L36690, SEM4)
+
+
+! For HEBT + LTB, append HEBT description and
+! Define HLTB (HEBT + LTB)
+HLTB: LINE = (HEBT,LTB)

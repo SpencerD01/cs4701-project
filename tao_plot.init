@@ -1,0 +1,311 @@
+This initialization file defines how plotting is done.
+
+The following namelist block defines how the plot window (also called
+the plot page) is broken up.
+
+&tao_plot_page
+  plot_page%plot_display_type = 'X'       ! 'X' or 'TK'
+  plot_page%size = 800, 425
+  plot_page%text_height = 11.0 
+  plot_page%border = 0, 0, 0, 0, '%PAGE'  
+  plot_page%n_curve_pts = 600
+
+
+  plot_page%floor_plan_shape_scale = 0.01 !m to cm
+
+  region(1)%name = 'top'
+  region(1)%location = 0.0, 1.0, 0.71, 0.95
+  
+  region(2)%name = 'middle'
+  region(2)%location = 0.0, 1.0, 0.42, 0.67
+  
+  region(3)%name = 'bottom'
+  !region(3)%location = 0.0, 1.0, 0.20, 0.42
+  region(3)%location = 0.0, 1.0, 0.14, 0.37
+  
+  region(4)%name = 'layout'
+  region(4)%location = 0.0, 1.0, 0.0, 0.1
+
+  region(5)%name = 'r21'
+  region(5)%location = 0.0, .5, 0.1, 0.5
+  region(6)%name = 'r11'
+  region(6)%location = 0.0, .5, .5, 1.0
+  region(7)%name = 'r22'
+  region(7)%location = 0.5, 1.0, 0.1, 0.5
+  region(8)%name = 'r12'
+  region(8)%location = 0.5, 1.0, 0.5, 1.0
+  
+  region(9)%name = 'r00'
+  region(9)%location = 0.0, 1.0, 0.0, 1.0
+
+
+  !place(1) = 'floor', 'floor'     !'abs_dispersion'
+  place(1) = 'top', 'beta'
+  place(2) = 'middle', 'dispersion'
+  place(3) = 'bottom', 'orbit'
+  place(4) = 'layout', 'layout'
+
+/
+
+
+
+!------------------ layout ------
+&tao_template_plot
+	plot%name = 'layout'
+	default_graph%x%label = ' '
+	plot%n_graph = 1
+	plot%x_axis_type = 's'
+/
+
+&tao_template_graph
+	graph_index = 1
+	graph%name = 'u1'
+	graph%type = 'lat_layout'
+	graph%box = 1, 1, 1, 1
+	graph%x%draw_numbers = False
+	graph%ix_universe = -1 !Syntax Changed from 0
+	graph%margin =  0.15, 0.05, 0.12, 0.12, '%BOX'
+ 	graph%y%max = 2
+	graph%y%min = -2
+ 	graph%y%major_div = 4
+/
+
+&lat_layout_drawing 
+  ele_shape(1) = "Quadrupole::*"   	"Diamond"	"Blue"	        .8 		'none'
+  ele_shape(2) = "SBend::*"		"Box"		"Red"		1		'none'
+  ele_shape(3) = "lcavity::*"		"XBox"		"Green"		.5		'none'
+  ele_shape(4) = "wiggler::*"		"XBox"		"Orange"	.5		'none'
+  ele_shape(5) = "Sextupole::*"		"asym_var_box"	"magenta"	0.1		'none'
+  ele_shape(6) = "ECOLLIMATOR::*"	"Xbox"		"Black"		20		'none'
+  ele_shape(7) = "hkicker::*"		"XBox"		"Red"		.2		'name'
+  ele_shape(8) = "vkicker::*"		"bow_tie"	"Red"		.2		'none'
+  ele_shape(9) = "INSTRUMENT::*BPM*"	"Diamond"	"Black"		.5		'none'
+  ele_shape(10) = "kicker::*"		"Box"		"Red"		.2		'none'
+  ele_shape(11) = "PIPE::*"		"Box"		"Light_Grey" .01		'none'
+  ele_shape(12) = "INSTRUMENT::*"	"Xbox"	  	"Black"		1		'none'
+  ele_shape(13) = "SOLENOID::*"		"Xbox"	  	"Blue"		1		'none'
+  ele_shape(14) = "rfcavity::*"	    	"XBox"		"Red"		1		'none'
+  ele_shape(15) = "E_GUN::*"	    	"XBox"		"Black"		20		'none'
+  ele_shape(16) = "EM_FIELD::*"	    	"Box"		"Blue"		20		'none'
+  ele_shape(16) = "MARKER::*"	    	"Box"		"Black"		.1		'none'
+  !ele_shape(16) = "wall::beam_chamber"	"XBox"		"Black"		500		'none'
+  ele_shape(17) = "ac_kicker::*"	"Box"		"Red"		.2		'none'
+  ele_shape(18) = "crab_cavity::*"	"XBox"		"Orange"	.5		'none'
+  ele_shape(19) = "monitor::*"		"circle"	"Purple"	.2		'none'
+  ele_shape(20) = "RBend::*"		"Box"		"Orange"	1		'none'
+/       
+   
+&floor_plan_drawing
+  ele_shape(1) = "Quadrupole::*"   	"Box"		"Blue"	        39		'name'  
+  ele_shape(2) = "SBend::*"		"Box"		"Red"		45		'name'
+  ele_shape(3) = "lcavity::*"		"XBox"		"Green"		20		'none'
+  ele_shape(4) = "wiggler::*"		"XBox"		"Orange"	10		'none'
+  ele_shape(5) = "Sextupole::*"		"Box"	"orange"	4		'none'
+  ele_shape(6) = "ECOLLIMATOR::*"	"Xbox"		"Black"		10		'none'
+  ele_shape(7) = "hkicker::*"		"XBox"		"Red"		25		'name'
+  ele_shape(8) = "vkicker::*"		"XBox"	        "Blue"		25		'none'
+  ele_shape(9) = "marker::MW*"	      "Diamond"	        "Black"		19		'none'
+  ele_shape(10) = "kicker::*"		"Box"		"Red"		5		'none'
+  ele_shape(11) = "PIPE::F*"		"Box"		"Light_Grey"		3.7		'none'
+  ele_shape(12) = "PIPE::*"		"Box"		"Light_Grey"		  2.1		'none'
+  ele_shape(13) = "INSTRUMENT::*"	"Xbox"	  	"Black"		5		'none'
+  ele_shape(14) = "SOLENOID::*"		"Xbox"	  	"Blue"		5		'none'
+  ele_shape(15) = "rfcavity::*"	    	"XBox"		"Red"		8		'none'
+  ele_shape(16) = "E_GUN::*"	    	"XBox"		"Black"		20		'none'
+  ele_shape(17) = "EM_FIELD::*"	    	"Box"		"Blue"		20		'none'
+  ele_shape(18) = "RBend::*"		"Box"		"Red"		45		'name'
+/  
+                                         
+! Colors: 
+!"BLACK" 
+!"RED" 
+!"ORANGE" 
+!"MAGENTA" 
+!"YELLOW" 
+!"GREEN" 
+!"CYAN" 
+!"BLUE" 
+!"PURPLE" 
+
+!--------------------------------------------------------------
+
+&tao_template_plot
+  plot%name = 'beta2'
+  plot%x_axis_type = 's'
+  default_graph%x%label = 's [m]'
+  plot%n_graph = 1
+/
+
+&tao_template_graph
+  graph%name = 'beta2'
+
+ graph%title = 'Beta (beam)'
+ !graph%x%draw_numbers = False
+ !graph%x%draw_label = False
+  graph_index = 1
+
+  graph%margin =  0.15, 0.05, 0.05, 0.0, '%BOX'
+  graph%y%label = '\gb\dx\u, \gb\dy\u [m]'
+  graph%y%label_offset=.4
+
+  curve(1)%data_source = 'beam'
+  curve(1)%data_type   = 'beta.a'
+  curve(1)%y_axis_scale_factor = 1
+  !curve(1)%line%color = "red"
+  curve(1)%line%width=2
+  curve(1)%draw_symbols=False
+  curve(1)%legend_text = '\gb\dx\u'
+
+  curve(2)%data_source = 'beam'
+  curve(2)%data_type   = 'beta.b'
+  curve(2)%y_axis_scale_factor = 1
+  curve(2)%draw_symbols=False
+  !curve(2)%line%color = "green"
+  curve(2)%line%width= 2
+  curve(2)%legend_text = '\gb\dy\u'
+/
+
+!--------------------------------------------------------------
+
+&tao_template_plot
+  plot%name = 'sigma1'
+  plot%x_axis_type = 's'
+  default_graph%x%label = 's [m]'
+  plot%n_graph = 1
+/
+
+&tao_template_graph
+  graph%name = 'sigma1'
+
+ graph%title = 'Beam size (beam)'
+ !graph%x%draw_numbers = False
+ !graph%x%draw_label = False
+  graph_index = 1
+
+  graph%margin =  0.15, 0.05, 0.05, 0.0, '%BOX'
+  graph%y%label = '\gs\dx\u, \gs\dy\u [mm]'
+  graph%y%label_offset=.4
+
+  curve(1)%data_source = 'beam'
+  curve(1)%data_type   = 'sigma.x'
+  curve(1)%y_axis_scale_factor = 1000
+  curve(1)%line%color = "blue"
+  curve(1)%line%width=2
+  curve(1)%draw_symbols=False
+  curve(1)%legend_text = '\gs\dx\u'
+
+  curve(2)%data_source = 'beam'
+  curve(2)%data_type   = 'sigma.y'
+  curve(2)%y_axis_scale_factor = 1000
+  curve(2)%draw_symbols=False
+  curve(2)%line%color = "orange"
+  curve(2)%line%width= 2
+  curve(2)%legend_text = '\gs\dy\u'
+/
+
+!--------------------------------------------------------------
+
+&tao_template_plot
+  plot%name = 'sigma2'
+  plot%x_axis_type = 's'
+  default_graph%x%label = 's [m]'
+  plot%n_graph = 1
+/
+
+&tao_template_graph
+  graph%name = 'sigma2'
+
+ graph%title = 'Beam size (lat)'
+ !graph%x%draw_numbers = False
+ !graph%x%draw_label = False
+  graph_index = 1
+
+  graph%margin =  0.15, 0.05, 0.05, 0.0, '%BOX'
+  graph%y%label = '\gs\dx\u, \gs\dy\u [mm]'
+  graph%y%label_offset=.4
+
+  curve(1)%data_source = 'lat'
+  curve(1)%data_type   = 'sigma.x'
+  curve(1)%y_axis_scale_factor = 1000
+  curve(1)%line%color = "blue"
+  curve(1)%line%width=2
+  curve(1)%draw_symbols=False
+  curve(1)%legend_text = '\gs\dx\u'
+
+  curve(2)%data_source = 'lat'
+  curve(2)%data_type   = 'sigma.y'
+  curve(2)%y_axis_scale_factor = 1000
+  curve(2)%draw_symbols=False
+  curve(2)%line%color = "orange"
+  curve(2)%line%width= 2
+  curve(2)%legend_text = '\gs\dy\u'
+/
+
+
+!--------------------------------------------------------------
+
+&tao_template_plot
+  plot%name = 'emittance'
+  plot%x_axis_type = 's'
+  default_graph%x%label = 's [m]'
+  plot%n_graph = 1
+/
+
+&tao_template_graph
+  graph%name = 'emit'
+
+ graph%title = 'Normalized Emittance'
+ !graph%x%draw_numbers = False
+ !graph%x%draw_label = False
+  graph_index = 1
+
+  graph%margin =  0.15, 0.05, 0.05, 0.0, '%BOX'
+  graph%y%label = '\ge\dn,x\u, \ge\dn,y\u [mm-mrad]'
+  graph%y%label_offset=.4
+
+  curve(1)%data_source = 'beam'
+  curve(1)%data_type   = 'norm_emit.x'
+  curve(1)%y_axis_scale_factor = 1e6
+  curve(1)%line%color = "blue"
+  curve(1)%line%width=2
+  curve(1)%draw_symbols=False
+  curve(1)%legend_text = '\ge\dn,x\u'
+
+  curve(2)%data_source = 'beam'
+  curve(2)%data_type   = 'norm_emit.y'
+  curve(2)%y_axis_scale_factor = 1e6
+  curve(2)%draw_symbols=False
+  curve(2)%line%color = "orange"
+  curve(2)%line%width= 2
+  curve(2)%legend_text = '\ge\dn,y\u'
+/
+
+!--------------------------------------------------------------
+
+&tao_template_plot
+plot%name = "floor"
+plot%n_graph = 1
+/
+&tao_template_graph
+graph_index = 1
+graph%name = "1"
+graph%type = "floor_plan"
+graph%box = 1, 1, 1, 1
+graph%margin = 0.07, 0.05, 0.07, 0.05, "%BOX"
+graph%ix_universe = -1 ! Draw all universes.
+!graph%ix_branch = 1
+!graph%y%min = -40
+!graph%y%max = 10
+graph%x%label = "SMART LABEL"
+graph%y%label = "SMART LABEL"
+graph%floor_plan%correct_distortion = T
+!graph%floor_plan%flip_label_side = T
+!graph%floor_plan%size_is_absolute = T
+!graph%floor_plan%view = "zx" ! Looking from beneath
+!graph%floor_plan%orbit_scale = 100
+!graph%floor_plan%orbit_color = "red"
+!graph%floor_plan%orbit_width = 3
+
+!--------------------------------------------------------------
+
+

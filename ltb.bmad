@@ -1,0 +1,113 @@
+!=====================================================================
+! LtB Physics Model
+! translated to BMAD 10/12/23  Lucy Lin
+!
+! This file contains values for constant variables used for elements
+!=====================================================================
+
+
+!========================================================
+! Physics constants
+!========================================================
+
+c = 2.99792458e8  ! speed of light [m/sec]
+
+
+!========================================================
+! Set variable values
+!========================================================
+
+! quads current
+IQ1 = 177.4
+IQ2 = 174.9
+IQ3 = 105.3
+IQ4 = 168.8
+IQ5 = 191.7
+IQ6 = 181.5
+IQ7 = 83.2
+IQ8 = 53.4
+IQ9 = 36.0
+IQ10 = 16.7
+IQ11 = 112.9
+IQ12 = 248.2
+IQ13 = 207.4
+
+
+! corrector current
+IDH015 = 0.0
+IDH076 = 0.0
+IDH088 = 0.0
+IDH115 = 0.0
+
+IDV017 = 0.0
+IDV026 = 0.0
+IDV083 = 0.0
+IDV095 = 0.0
+IDV112 = 0.0
+
+
+!========================================================
+! Beam parameters
+!========================================================
+
+E0 = 938.2723  ! MeV proton mass
+BRO0 = 2.148457
+
+EKIN = 199.8 ! MeV beam kinetic energy
+
+EE = EKIN + E0
+
+PC = sqrt(EKIN*(EKIN+2*E0))
+BRHO = PC/299.792458
+BETA = sqrt(1-1/((1+EKIN/E0)*(1+EKIN/E0)))
+SCALF = BRO0/BRHO
+
+parameter[particle] = proton
+parameter[E_tot] = EE * 1e6
+parameter[n_part] = 1
+
+
+
+!========================================================
+! Call lattice files
+!========================================================
+
+call, file = ltb.conversions.bmad
+
+call, file = ltb.drifts.bmad
+
+call, file = ltb.bends.bmad
+
+call, file = ltb.quads.bmad
+
+call, file = ltb.markers.bmad
+
+call, file = ltb.kickers.bmad
+
+call, file = ltb.lines.bmad
+
+
+
+
+!=======================================================
+! NSRL Line
+!=======================================================
+
+
+use, HLTB
+
+
+parameter[geometry] = open
+
+!=======================================================
+! Initial twiss conditions from Linac
+!=======================================================
+
+beginning[beta_a] = 2.1692
+beginning[beta_b] = 2.2104
+beginning[alpha_a] = 0.61323
+beginning[alpha_b] = -0.97444
+beginning[eta_x] = 0
+beginning[eta_y] = 0
+
+

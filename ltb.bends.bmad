@@ -1,0 +1,19 @@
+!==============================================================
+! Dipoles for LtB lattice (+ Booster C5 as entered from LTB)
+! From ltb.dat MAD file
+! 10/12/23  Lucy Lin
+!==============================================================
+
+! note: DH1 now has 3.75 deg entr and exit angles
+! not 0. and 7.5 deg as previous
+
+DH1T: SBEND,  L=LENDH1/2.,  ANGLE=ANGDH1/2.,  E1=ANGE1, E2=-0.0
+DH1Z: SBEND,  L=LENDH1/2.,  ANGLE=ANGDH1/2.,  E1=-0.0 , E2=ANGE1
+
+DH2: SBEND,  L=LENDH25, ANGLE=ANGDH25, E1=ANGE25, E2=ANGE25, HGAP = 0.03175, FINT = Pfint
+DH3: SBEND,  L=LENDH25, ANGLE=ANGDH25, E1=ANGE25, E2=ANGE25, HGAP = 0.03175, FINT = Pfint
+DH4: SBEND,  L=LENDH25, ANGLE=ANGDH25, E1=ANGE25, E2=ANGE25, HGAP = 0.03175, FINT = Pfint
+DH5: SBEND,  L=LENDH25, ANGLE=ANGDH25, E1=ANGE25, E2=ANGE25, HGAP = 0.03175, FINT = Pfint
+
+! Booster C5 centered from side
+DHC5: SBEND, L=1.4656, ANGLE=-0.1175175, E1=1.3462, E2=.0026539

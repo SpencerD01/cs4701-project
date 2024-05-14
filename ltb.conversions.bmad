@@ -1,0 +1,179 @@
+!==============================================================
+! ltb.conversions
+!
+! translated to BMAD 10/12/23  Lucy Lin
+!
+! This file contains parameter conversions used in Linac Tank9
+! to Booster transfer line (ltb)
+!
+!==============================================================
+!
+! Expected Variables:
+! 1. IDIPO               = for main dipole current
+! 2. BRHO                = used in tune and chromaticity calculations
+! 3. IQ1,IQ2,IQ3,IQ4,IQ5,IQ6,IQ7,IQ8    = quadrupole PS current
+! 4. IO1, IO2            = octupole PS current
+! 5. BDOT
+!
+!==============================================================
+
+
+
+!========================================================
+! Lengths and angles
+!========================================================
+
+LENDH25 = 1.183
+LENDH1  = 0.32512
+LENQ    = 0.265
+LENK    = 0.344
+LENL    = 0.254
+LENP    = 0.23495  ! = 9-1/4 in; prev = .508
+
+! HEBT quads
+LENQ1 = 0.234
+LENQ2 = 0.293
+
+ANGDH1  =-0.1309   ! = 7.5 deg
+ANGDH25 =-0.550499
+
+ANGE1   = ANGDH1/2.
+ANGE25  = ANGDH25/2.
+
+
+!========================================================
+! s-coordinates
+!========================================================
+
+
+S_DH1 =   0.
+S_DH2 =  11.9084
+S_DH3 =  13.5121
+S_DH4 =  15.7159
+S_DH5 =  21.3427
+
+S_QH1 =   4.7064
+S_QV2 =   6.0064
+S_QH3 =   7.3064
+S_QV4 =   8.6064
+S_QH5 =   9.9064
+S_QH6 =  14.6140
+S_QH7 =  16.8178
+S_QH8 =  24.4448
+S_QV9 =  25.7448
+S_QH10 =  28.0448
+S_QV11 =  29.3448
+S_QH12 =  31.6447
+S_QV13 =  33.7448
+
+S_DH015 =   4.3508
+S_DV017 =   5.0620
+S_DV026 =   7.6620
+S_DH076 =  23.1748
+S_DV083 =  25.3130
+S_DH088 =  26.7748
+S_DV095 =  28.6590
+S_DV112 =  34.1004
+S_DH115 =  34.7350
+
+!   split bpms -- S_ values are actual locations of the
+!        respective horiz and vert sensor wires
+!   Warning: Do not add a "B" to make these BPMm
+
+S_PMH019 =  5.5192 ! no-change imputed
+S_PMH027 =  8.1129 ! no-change imputed
+S_PMH066 =  19.8847 
+S_PMH078 =  23.6700 
+S_PMH090 =  27.2730 
+S_PMH102 =  30.8699 
+S_PMH109 =  32.9887 
+S_PMV019 =  S_PMH019 - LENP
+S_PMV027 =  S_PMH027 - LENP
+S_PMV066 =  S_PMH066 - LENP
+S_PMV078 =  S_PMH078 - LENP
+S_PMV090 =  S_PMH090 - LENP
+S_PMV102 =  S_PMH102 - LENP
+S_PMV109 =  S_PMH109 - LENP
+
+S_MW035 =   10.6684
+S_MW107 =   32.6875
+
+S_XF011 =   3.1507
+S_XF100 =  30.5589
+
+S_Z005 =   1.5727
+S_Z074 =  22.5492
+
+S_LTB_END = 35.7338 
+
+
+!========================================================
+! Dipole parameters
+!========================================================
+
+IDH1_0  = 182.71
+IDH25_0 = 1027.
+CALDH1  = ANGDH1/IDH1_0 * SCALF
+CALDH25 = ANGDH25/IDH25_0 * SCALF
+
+Fzzzz = 0.0
+Pfint = 0.5
+
+
+!========================================================
+! Quadrupole parameters
+!========================================================
+
+CALIB = 1.
+I1 = 0.
+I2 = 0.
+
+! Quad calibration (rev 4-28-92)
+CALQA = 0.00776
+CALQB = 0.004568
+CALQC = 0.00000065
+CALQD = 0.0000000016
+
+GQ1 = (CALQA +  IQ1*(CALQB +  IQ1*(CALQC +  IQ1*CALQD )))/LENQ
+GQ2 = (CALQA +  IQ2*(CALQB +  IQ2*(CALQC +  IQ2*CALQD )))/LENQ
+GQ3 = (CALQA +  IQ3*(CALQB +  IQ3*(CALQC +  IQ3*CALQD )))/LENQ
+GQ4 = (CALQA +  IQ4*(CALQB +  IQ4*(CALQC +  IQ4*CALQD )))/LENQ
+GQ5 = (CALQA +  IQ5*(CALQB +  IQ5*(CALQC +  IQ5*CALQD )))/LENQ
+GQ6 = (CALQA +  IQ6*(CALQB +  IQ6*(CALQC +  IQ6*CALQD )))/LENQ
+GQ7 = (CALQA +  IQ7*(CALQB +  IQ7*(CALQC +  IQ7*CALQD )))/LENQ
+GQ8 = (CALQA +  IQ8*(CALQB +  IQ8*(CALQC +  IQ8*CALQD )))/LENQ
+GQ9 = (CALQA +  IQ9*(CALQB +  IQ9*(CALQC +  IQ9*CALQD )))/LENQ
+GQ10 = (CALQA + IQ10*(CALQB + IQ10*(CALQC + IQ10*CALQD )))/LENQ
+GQ11 = (CALQA + IQ11*(CALQB + IQ11*(CALQC + IQ11*CALQD )))/LENQ
+GQ12 = (CALQA + IQ12*(CALQB + IQ12*(CALQC + IQ12*CALQD )))/LENQ
+GQ13 = (CALQA + IQ13*(CALQB + IQ13*(CALQC + IQ13*CALQD )))/LENQ
+
+! HEBT quads
+PARM = -1.
+CALA = 0.01733 ! T/m/Amp
+CALB = 0.1808 ! T/m/Amp
+
+! Deepaks polynomial for QH1 is
+! gradient=(0.00776+0.004568*i+6.5e-7*i^2+1.6e-9*i^3)/0.265
+! This is the same as is used above for the LTB quads.
+!  4/30/03 - KAB
+
+CAL1 = 0.0060655   ! T/m/DEC
+CAL2 = 0.00452     ! T/m/DEC
+
+DAC07 = -236.0
+DAC17 = 245.7
+DAC29 = -15.5
+DAC42 = 19.4
+DAC54 = -12.3
+
+
+!========================================================
+! Corrector parameters
+!========================================================
+
+!    ltb corrector calibration [rad/amp] (AUL 3/02/93)
+!    0.000138 is bta value)
+CALK = -0.000282*SCALF
+
+

@@ -1,0 +1,75 @@
+!==============================================================
+! Drift sections for LtB lattice
+! From ltb.dat MAD file
+! 10/12/23  Lucy Lin
+!==============================================================
+
+!==============================================================
+! HEBT to Booster drifts
+!==============================================================
+
+DR005: DRIFT,  L= S_Z005 - S_DH1 - LENDH1/2.
+DR011: DRIFT,  L= S_XF011 - S_Z005
+DR015: DRIFT,  L= S_DH015 - S_XF011 - LENK/2.
+DRQH1: DRIFT,  L= S_QH1 -S_DH015 - LENK/2. - LENQ/2.
+DR017: DRIFT,  L= S_DV017 - S_QH1 - LENK/2. - LENQ/2.
+DR019: DRIFT,  L= S_PMV019 - S_DV017 - LENK/2. 
+DRQV2: DRIFT,  L= S_QV2 - S_PMH019 - LENQ/2.
+DRQH3: DRIFT,  L= S_QH3 - S_QV2 - LENQ
+DR026: DRIFT,  L= S_DV026 - S_QH3 - LENK/2. - LENQ/2.
+DR027: DRIFT,  L= S_PMV027 - S_DV026 - LENK/2. 
+DRQV4: DRIFT,  L= S_QV4 - S_PMH027 - LENQ/2. 
+DRQH5: DRIFT,  L= S_QH5 - S_QV4 - LENQ
+DR035: DRIFT,  L= S_MW035 - S_QH5 - LENQ/2.
+DRDH2: DRIFT,  L= S_DH2 - S_MW035 - LENDH25/2.
+DRDH3: DRIFT,  L= S_DH3 - S_DH2 - LENDH25
+DRQH6: DRIFT,  L= S_QH6 - S_DH3 - LENDH25/2. - LENQ/2.
+DRDH4: DRIFT,  L= S_DH4 - S_QH6 - LENDH25/2. - LENQ/2.
+DRQH7: DRIFT,  L= S_QH7 - S_DH4 - LENDH25/2. - LENQ/2.
+DR066: DRIFT,  L= S_PMV066 - S_QH7 - LENQ/2. 
+DRDH5: DRIFT,  L= S_DH5 - S_PMH066 - LENDH25/2.
+DR074: DRIFT,  L= S_Z074 - S_DH5 - LENDH25/2.
+DR076: DRIFT,  L= S_DH076 - S_Z074 - LENK/2.
+DR078: DRIFT,  L= S_PMV078 - S_DH076 - LENK/2. 
+DRQH8: DRIFT,  L= S_QH8 - S_PMH078 - LENQ/2. 
+DR083: DRIFT,  L= S_DV083 - S_QH8 - LENK/2. - LENQ/2.
+DRQV9: DRIFT,  L= S_QV9 - S_DV083 - LENK/2. - LENQ/2.
+DR088: DRIFT,  L= S_DH088 - S_QV9 - LENK/2. - LENQ/2.
+DR090: DRIFT,  L= S_PMV090 - S_DH088 - LENK/2. 
+DRQH10: DRIFT,  L= S_QH10 - S_PMH090 - LENQ/2.
+DR095: DRIFT,  L= S_DV095 - S_QH10 - LENK/2. - LENQ/2.
+DRQV11: DRIFT,  L= S_QV11 - S_DV095 - LENK/2. - LENQ/2.
+DR100: DRIFT,  L= S_XF100 - S_QV11 - LENQ/2.
+DR102: DRIFT,  L= S_PMV102 - S_XF100 
+DRQH12: DRIFT,  L= S_QH12 - S_PMH102 - LENQ/2.
+DR107: DRIFT,  L= S_MW107 - S_QH12 - LENQ/2.
+DR109: DRIFT,  L= S_PMV109 - S_MW107 
+DRQV13: DRIFT,  L= S_QV13 - S_PMH109 - LENQ/2. 
+DR112: DRIFT,  L= S_DV112 - S_QV13 - LENK/2. - LENQ/2.
+DR115: DRIFT,  L= S_DH115 - S_DV112 - LENK/2. - LENL/2.
+DREND: DRIFT,  L= S_LTB_END - S_DH115 - LENL/2.
+
+MLC5x: DRIFT,  L=1.0 - 0.117 - 0.595
+DRC6P: DRIFT,  L=0.595 
+DRC6Q: DRIFT,  L=0.117
+
+INTRABPM: DRIFT, L = LENP
+
+!==============================================================
+! HEBT drifts
+!==============================================================
+
+L18950: DRIFT, L=1.895                                                    
+L03489: DRIFT, L=0.3489                                                   
+L23784: DRIFT, L=2.3784                                                  
+L03237: DRIFT, L=0.3237                                                   
+L33150: DRIFT, L=3.315                                                    
+L17650: DRIFT, L=1.76500                                                  
+L17640: DRIFT, L=1.76400                                                 
+L17641: DRIFT, L=1.76400                                                 
+L04414: DRIFT, L=0.4414                                                   
+L13236: DRIFT, L=1.3236                                                   
+L10920: DRIFT, L=1.09200                                                  
+L04510: DRIFT, L=0.451                                                    
+L23320: DRIFT, L=2.332
+L36690: DRIFT, L=3.669
