@@ -1,4 +1,8 @@
 # cs4701-project
+
+## Main Idea of Our Project:
+
+This project utilizes Reinforcement Learning and other machine learning techniques to teach an agent to correct the orbit trajectory within a particle accelerator.
  
 ## File Structure Organization:
 
