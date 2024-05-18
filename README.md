@@ -3,6 +3,9 @@
 ## Main Idea of Our Project:
 
 This project utilizes Reinforcement Learning and other machine learning techniques to teach an agent to correct the orbit trajectory within a particle accelerator.
+
+We recommend you run the Jupyter Notebooks on Colab, especially if you have access to Colab's GPU/TPU resources. If you are running locally, ignore the colab install block 
+(you might also have to run pip install locally instead of conda install for some of the packages in the Jupyter Notebook, so ignore those blocks as well).
  
 ## File Structure Organization:
 
