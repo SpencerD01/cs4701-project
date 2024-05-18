@@ -6,6 +6,7 @@ import pickle
 import random
 import gymnasium as gym
 from gymnasium import spaces
+from time import time
 
 
 # Extracts data
@@ -59,9 +60,10 @@ class LTBEnv(gym.Env):
                obs_high : float = 1.0,
                max_steps : int = 200,
                convergence_val : float = 1e-4,
+               bad_convergence_val : float = 1e-3,
                reward_alpha : float = 1e-1,
                reward_beta : float = 1e-2,
-               reward_delta : float = 1.0):
+               reward_fun : int = 2):
 
     # Initialize a tao object
     self.init_file = init_file
@@ -78,6 +80,7 @@ class LTBEnv(gym.Env):
     
     # Get current variable values
     self.var_values = get_variable_values(self.tao, self.var_list) # Current variable values
+    self.initial_var_values = self.var_values
     self.action_dim = len(self.var_values)
     # Set up an action space
     self.action_space = spaces.Box(low = action_low * np.ones(self.action_dim),
@@ -91,13 +94,16 @@ class LTBEnv(gym.Env):
     self.done = 0
     self.truncated = 0
     self.convergence_value = convergence_val # Max orbit value is below this = convergence
+    self.bad_convergence_value = bad_convergence_val
     self.max_steps = max_steps
     self.nsteps = 0
 
     # Reward Hyperparameters
     self.alpha = reward_alpha
     self.beta = reward_beta
-    self.delta = reward_delta
+
+    # Reward + Convergence type
+    self.reward_fun = reward_fun
 
 
 
@@ -111,6 +117,9 @@ class LTBEnv(gym.Env):
     # Reset variable values and current state
     self.state = get_data_values(self.tao, self.data_dict)  # Current Data values (current state)
     self.var_values = get_variable_values(self.tao, self.var_list) # Current variable values
+
+    assert np.sum(self.state == self.initial_state) == len(self.state), "Initialization did not work!"
+    assert np.sum(self.var_values == self.initial_var_values) == len(self.var_values), "Initialization did not work!"
 
     # Reset episode parameters
     self.done = 0
@@ -148,21 +157,10 @@ class LTBEnv(gym.Env):
     set_new_variable_values(self.tao, self.var_list, self.var_values)
 
     # Update state
-    prev_state = self.state
     self.state = get_data_values(self.tao, self.data_dict)
-    current_max_orbit = np.max(np.abs(self.state))
 
-    # Is the episode done
-    if self.nsteps >= self.max_steps:
-      self.done = 1
-      self.truncated = 1
-    elif current_max_orbit <= self.convergence_value:
-      self.done = 1
-    else:
-      self.done = 0
-    
-    # Get reward
-    reward = self.calculate_reward(prev_state, self.state)
+    # Get reward (also checks if episode is done)
+    reward = self.calculate_reward()
     
     return self.state, reward, self.done, self.truncated, {}
   
@@ -172,97 +170,95 @@ class LTBEnv(gym.Env):
 
   ##############################################################################
   # Calculate the reward from the given prev and new state
-  def calculate_reward(self, prev_state : np.ndarray, new_state : np.ndarray):
+  def calculate_reward(self):
 
-    prev_max_orbit = np.max(np.abs(prev_state))
-    current_max_orbit = np.max(np.abs(self.state))
+    current_orbit_value = np.max(np.abs(self.state))
 
     if self.nsteps >= self.max_steps:
       reward = -10
-    elif current_max_orbit <= self.convergence_value:
-      print("convergence achieved")
-      reward = 10
+      self.done = 1
+      self.truncated = 1
+    elif current_orbit_value <= self.convergence_value:
+      print(f"convergence achieved, current_orbit_value = {current_orbit_value}")
+      self.done = 1
+      self.truncated = 0
+      reward = 10 + 0.01 * (self.max_steps - self.nsteps)
+    elif current_orbit_value >= self.bad_convergence_value:
+      #print("bad convergence achieved")
+      reward = -10
+      self.done = 0
+      self.truncated = 0
     else:
-
-      # # Function 1 (Doesn't work)
-      # if False:
-      #   reward = prev_max_orbit - current_max_orbit
-      
-      # # Function 2 (Doesn't work)
-      # if True:
-      #   reward = self.alpha * np.sign(prev_max_orbit - current_max_orbit) / current_max_orbit
-
-      if True:
+      self.done = 0
+      self.truncated = 0
+      if self.reward_fun == 1:
+        reward = self.alpha / current_orbit_value
+      elif self.reward_fun == 2:
         reward = 0
-
-      # if False:
-      #   reward = -1 * 1e-2
-
-      if False:
-        reward = (self.alpha * np.sign(prev_max_orbit - current_max_orbit) / current_max_orbit) - self.beta / (np.abs(prev_max_orbit - current_max_orbit))
-
-      if False:
+      elif self.reward_fun == 3:
+        reward = -1 * 1e-2
+      elif self.reward_fun == 4:
         reward = 0
         for orbit in self.state:
-          if orbit <= self.delta * self.convergence_value:
-            reward += 0.5
+          if np.abs(orbit) <= self.convergence_value:
+            reward += self.alpha
           else:
-            reward -= 0.5
+            reward -= self.beta
 
     return reward
 
 
 
 
-
 if __name__ == "__main__":
   env = LTBEnv("./bmad_scripts/tao.init", 
-                {"orbit.x": "MW", "orbit.y": "MW"}, 
-                ["correctors_x", "correctors_y"],
+                {"orbit.x": "MW"}, 
+                ["correctors_x"],
                 -0.01,
                 0.01,
-                max_steps = 100)
+                max_steps = 1e3)
 
   # Store episode
   states = []
-  action_list = []
-  rewards = []
-  dones = []
-  truncateds = []
+  # action_list = []
+  # rewards = []
+  # dones = []
+  # truncateds = []
 
   # Start of the state
   first_state, _ = env.reset()
   states.append(first_state)
 
   # Loop through
+  start_time = time()
   while True:
 
     # Get action
     actions = env.sample_action()
     # Make a step
-    new_state, reward, done, truncated, _ = env.step(actions)
+    #new_state, reward, done, truncated, _ = env.step(actions)
+    new_state, _, _, done, _ = env.step(actions)
 
     # Add to storage
-    states.append(new_state), rewards.append(reward), dones.append(done), truncateds.append(truncated), action_list.append(actions)
+    states.append(new_state)
+    # rewards.append(reward), dones.append(done), truncateds.append(truncated), action_list.append(actions)
     
     # If done end loop
     if done:
       break
 
-  min_state = np.inf
+  print(time()-start_time)
+
   min_max_state = np.inf
   for state in states:
-    min_s = np.min(np.abs(state))
     max_s = np.max(np.abs(state))
-    if min_s < min_state:
-      min_state = min_s
     if max_s < min_max_state:
       min_max_state = max_s
+    
+  resstate, _ = env.reset()
 
-  print(min_state)
+  # print(states)
+  # print(rewards)
+  # print(resstate)
   print(min_max_state)
-  print(states[0])
-
-
-
-
+  print(time()-start_time)
